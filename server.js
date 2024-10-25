@@ -10,12 +10,14 @@ var inventario = [
         name: "Manzana",
         currentStock: 2,
         minimunStock: 1,
+        lastUpdated: new Date().toISOString().slice(0, 10)
     },
     {
         productId : 2,
         name: "Mango",
         currentStock: 5,
         minimunStock: 2,
+        lastUpdated: new Date().toISOString().slice(0, 10)
     }
 ];
 
@@ -46,6 +48,7 @@ server.put('/inventory/:productId', (req, res) => {
                     return res.status(200).json({message: "Cantidad mayor que el actual"});
                 else if(operation == "add") inventario[i].currentStock += quantity;
                 else return res.status(500).json({message: "error"});
+                inventario[i].lastUpdated = new Date().toISOString().slice(0, 10);
                 return res.status(200).json(
                     {message: "ProductId " +productId +" actualizado correctamente"}
                 );

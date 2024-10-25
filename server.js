@@ -10,14 +10,12 @@ var inventario = [
         name: "Manzana",
         currentStock: 2,
         minimunStock: 1,
-        lastUpdated: ""
     },
     {
         productId : 2,
         name: "Mango",
         currentStock: 5,
         minimunStock: 2,
-        lastUpdated: ""
     }
 ];
 

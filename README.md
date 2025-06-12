@@ -21,9 +21,6 @@ El sistema de inventario incluirá funcionalidades básicas como:
 
 - Gestión de productos:
   - Crear / Leer / Actualizar / Eliminar productos
-- Gestión de categorías
-- Control de stock (entradas y salidas)
-- Registro de movimientos
 - Autenticación de usuarios (opcional según framework)
 - API RESTful para consumo por frontend o terceros
 

@@ -7,7 +7,7 @@ Este proyecto es una iniciativa personal para explorar distintos frameworks de b
 Este repositorio contendrá versiones del sistema construidas con diferentes frameworks, tales como:
 
 - **Node.js (Express.js)**
-- **Python (FastAPI / Django)**
+- **Python (Flask, Django)**
 - **Java (Spring Boot)**
 - **Go (Gin / Fiber)**
 - **Rust (Actix Web / Rocket)**
@@ -30,8 +30,11 @@ El sistema de inventario incluirá funcionalidades básicas como:
 inventario-backend/
 │
 ├── express/            # Implementación en Express.js
+├── flask/              # Implementación en Flask
 ├── fastapi/            # Implementación en FastAPI
+├── django/             # Implementación en Django
 ├── springboot/         # Implementación en Spring Boot
 ├── .NET/               # Implementación en .NET Core
 ├── docs/               # Documentación adicional
+├── postman             # Archivo de rutas exportadas en postman
 └── README.md           # Este archivo

@@ -21,6 +21,10 @@ var inventario = [
     }
 ];
 
+server.get('/inventory', (req, res) => {
+    res.status(200).json(inventario)
+});
+
 server.get('/inventory/:productId', (req, res) => {
     const productId = req.params.productId;
     if(productId != null){

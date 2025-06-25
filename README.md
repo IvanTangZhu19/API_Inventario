@@ -1,6 +1,6 @@
 # 📦 Inventario Backend - Exploración de Frameworks
 
-Este proyecto es una iniciativa personal para explorar distintos frameworks de backend a través de la construcción de un sistema de inventario sencillo. El objetivo es comparar tecnologías en cuanto a rendimiento, facilidad de uso, estructura de código y soporte de comunidad.
+Este proyecto es una iniciativa personal para explorar distintos frameworks de backend a través de la construcción de un sistema de inventario sencillo. El objetivo es comparar tecnologías, ver como funcionan las rutas, parámetros, entre otraos temas.
 
 ## 🚀 Tecnologías exploradas
 

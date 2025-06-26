@@ -88,7 +88,7 @@ server.get('/inventory/:productId', (req, res) => {
 
 server.put('/inventory/:productId', (req, res) => {
     const productId = req.params.productId;
-    const { quantity, operation } = req.body;
+    const { quantity, operation, name } = req.body;
     if ((productId != null || quantity > 0) &&
         (operation == "add" || operation == "substract")) {
         for (var i = 0; i < inventario.length; i++) {
@@ -112,6 +112,7 @@ server.put('/inventory/:productId', (req, res) => {
                     }
                 });
                 inventario[i].lastUpdated = new Date().toISOString().slice(0, 10);
+                if(name) inventario[i].name = name
                 return res.status(200).json(
                     {
                         message: "ProductId " + productId + " actualizado correctamente"

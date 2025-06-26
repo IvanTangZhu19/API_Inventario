@@ -136,6 +136,21 @@ server.put('/inventory/:productId', (req, res) => {
     });
 });
 
+server.delete('/inventory/:productId', (req, res) => {
+    const productId = req.params.productId;
+    for (var i = 0; i < inventario.length; i++) {
+        if (inventario[i].productId == productId) {
+            inventario[i] = null
+            return res.status(200).json({
+                success: {
+                    code: "ABC",
+                    message: "Se eliminó correctamente",
+                }
+            })
+        }
+    }
+});
+
 const port = 4002;
 server.listen(port, () => {
     console.log(`La aplicación está escuchando en http://localhost:${port}`);

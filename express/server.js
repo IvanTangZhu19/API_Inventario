@@ -112,7 +112,7 @@ server.put('/inventory/:productId', (req, res) => {
                     }
                 });
                 inventario[i].lastUpdated = new Date().toISOString().slice(0, 10);
-                if(name) inventario[i].name = name
+                if (name) inventario[i].name = name
                 return res.status(200).json(
                     {
                         message: "ProductId " + productId + " actualizado correctamente"
@@ -138,17 +138,13 @@ server.put('/inventory/:productId', (req, res) => {
 
 server.delete('/inventory/:productId', (req, res) => {
     const productId = req.params.productId;
-    for (var i = 0; i < inventario.length; i++) {
-        if (inventario[i].productId == productId) {
-            inventario[i] = null
-            return res.status(200).json({
-                success: {
-                    code: "ABC",
-                    message: "Se eliminó correctamente",
-                }
-            })
+    inventario = inventario.filter(item => item.productId !== productId)
+    return res.status(200).json({
+        success: {
+            code: "ABC",
+            message: "Se eliminó correctamente",
         }
-    }
+    })
 });
 
 const port = 4002;

@@ -1,10 +1,17 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 server = express();
 
 server.use(express.json());
 
 var productID = 2
+const JWT_SECRET = "JWT"
+
+const createHashedPassword = async (password) => {
+  return await bcrypt.hash(password, 10);
+};
 
 var inventario = [
     {
@@ -22,6 +29,15 @@ var inventario = [
         lastUpdated: new Date().toISOString().slice(0, 10)
     }
 ];
+
+var users = [
+    {
+        id: 1,
+        name: "Iván",
+        email: "ivan@gmail.com",
+        password: ""
+    }
+]
 
 server.get('/inventory', (req, res) => {
     res.status(200).json(inventario)
@@ -147,7 +163,57 @@ server.delete('/inventory/:productId', (req, res) => {
     })
 });
 
+server.get('/users/login', async (req, res)=>{
+    const { email, password } = req.body;
+    if(!email || !password){
+        return res.status(400).json({
+            error: {
+                code: "ABC",
+                message: "Faltan datos",
+                details: "Faltan parámetros o son nulos"
+            }
+        });
+    }
+    const user = users.find(u => u.email == email)
+    if(!user){
+        return res.status(401).json({
+            error: {
+                code: "ABC",
+                message: "Usuario no encontrado",
+                details: "Usuario con ese correo no está en base de datos"
+            }
+        });
+    }
+    const validPass = await bcrypt.compare(password, user.password)
+    if(!validPass){
+        return res.status(401).json({
+            error: {
+                code: "ABC",
+                message: "Contraseña incorrecta",
+                details: "Contraseña no coincide con base de datos"
+            }
+        });
+    }
+    const token = jwt.sign(
+        {
+            id: user.id,
+            name: user.name,
+            email: user.email
+        },
+        JWT_SECRET,
+        {expiresIn: '24h'}
+    )
+    return res.status(200).json({
+        success: {
+            code: "ABC",
+            message: "Login exitoso",
+            token: token
+        }
+    })
+})
+
 const port = 4002;
-server.listen(port, () => {
+server.listen(port, async () => {
+    users[0].password = await createHashedPassword("prueba123")
     console.log(`La aplicación está escuchando en http://localhost:${port}`);
 });

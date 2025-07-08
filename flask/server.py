@@ -30,9 +30,9 @@ users = [
 ]
 
 
-@app.route("/")
+@app.route("/inventory")
 def inventory():
-    return "<h1>Hola</h1>"
+    return jsonify({inventario}), 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=4002)

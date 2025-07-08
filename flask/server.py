@@ -1,7 +1,9 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import json
 
 app = Flask(__name__)
+
+productID_ =2
 
 inventario = [
     {
@@ -54,7 +56,46 @@ def getProductsByID(productID):
                 "message": "Parámetros incorrectos",
                 "details": "productId incorrecto"
             }
-        }), 400 
+        }), 400
+
+@app.route("/inventory", methods=["POST"])
+def createProduct():
+    global productID_
+    data = request.get_json()
+    name = data.get("name")
+    minimunStock = data.get("minimunStock")
+    quantity = data.get("quantity") 
+    if (name is None or minimunStock is None or quantity is None) :
+        return jsonify({
+            "error": {
+                "code": "ABC",
+                "message": "Falta información",
+                "details": "Falta información (name, minimunStock, quantity)"
+            }
+        }), 400
+    if (minimunStock < 0 or quantity < 0) :
+        return jsonify({
+            "error": {
+                "code": "ABC",
+                "message": "Cantidades deben ser mayores a cero",
+                "details": "Cantidades: minimunStock, quantity deben ser mayores a cero"
+            }
+        }), 400
+    productID_ = productID_ + 1
+    inventario.append({
+        "productID": productID_,
+        "name": name,
+        "quantity": quantity,
+        "minimunStock": minimunStock,
+        "lastUpdated": ""
+    })
+    return jsonify({
+        "success": {
+            "code": "ABC",
+            "message": "Se añadió correctamente",
+        }
+    }), 201
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=4002)

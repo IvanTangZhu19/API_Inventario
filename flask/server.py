@@ -30,11 +30,11 @@ users = [
 ]
 
 
-@app.route("/inventory")
+@app.route("/inventory", methods=["GET"])
 def getProducts():
     return jsonify(inventario), 200
 
-@app.route("/inventory/<int:productID>")
+@app.route("/inventory/<int:productID>", methods=["GET"])
 def getProductsByID(productID):
     if (productID is not None):
         for i in inventario:

@@ -96,6 +96,33 @@ def createProduct():
         }
     }), 201
 
+@app.route("/inventory/<int:productID>", methods=["DELETE"])
+def deleteProductByID(productID):
+    if (productID is not None):
+        for i in inventario:
+            if i["productID"] == productID :
+                inventario.remove(i)
+                return jsonify({
+                    "success": {
+                        "code": "ABC",
+                        "message": "Se eliminó correctamente",
+                    }
+                }), 200
+        return jsonify({
+            "error": {
+                "code": "ABC",
+                "message": "ProductoId no encontrado",
+                "details": "Parámetro productId no encontrado en la base de datos"
+            }
+        }), 404 
+    else:
+        return jsonify({
+            "error": {
+                "code": "ABC",
+                "message": "Parámetros incorrectos",
+                "details": "productId incorrecto"
+            }
+        }), 400
 
 if __name__ == '__main__':
     app.run(debug=True, port=4002)

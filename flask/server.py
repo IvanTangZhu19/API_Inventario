@@ -96,6 +96,58 @@ def createProduct():
         }
     }), 201
 
+@app.route("/inventory/<int:productID>", methods=["PUT"])
+def updateProduct(productID):
+    data = request.get_json()
+    name = data.get("name")
+    quantity = data.get("quantity") 
+    operation = data.get("operation") 
+    if (name is None or quantity is None or operation is None) :
+        return jsonify({
+            "error": {
+                "code": "ABC",
+                "message": "Falta información",
+                "details": "Falta información (name, quantity, operation)"
+            }
+        }), 400
+    if quantity <= 0 :
+        return jsonify({
+            "error": {
+                "code": "ABC",
+                "message": "Información incorrecta",
+                "details": "Quantity debe ser mayor a cero"
+            }
+        }), 400
+    if(operation != "add" and operation != "substract"):
+        return jsonify({
+            "error": {
+                "code": "ABC",
+                "message": "Información incorrecta",
+                "details": "Operation tiene que ser add o substract"
+            }
+        }), 400
+    for i in inventario:
+        if (i["productID"] == productID) :
+            if (operation == "substract" and i["currentStock"] >= quantity):
+                i["currentStock"] -= quantity
+            elif (operation == "substract" and i["currentStock"] < quantity):
+                return jsonify({
+                    "error": {
+                        "code": "ABC",
+                        "message": "Cantidad erronea",
+                        "details": "No hay suficientes existencias del producto"
+                    }
+                }), 400
+            elif (operation == "add"):
+                i["currentStock"] += quantity
+            i["name"] = name
+            return jsonify({
+                "success": {
+                    "code": "ABC",
+                    "message": "Se actualizó correctamente",
+                }
+            }), 200
+
 @app.route("/inventory/<int:productID>", methods=["DELETE"])
 def deleteProductByID(productID):
     if (productID is not None):

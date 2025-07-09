@@ -14,14 +14,14 @@ inventario = [
         "name": "Manzana",
         "currentStock": 2,
         "minimunStock": 1,
-        "lastUpdated": ""
+        "lastUpdated": datetime.datetime.utcnow()
     },
     {
         "productID": 2,
         "name": "Mango",
         "currentStock": 5,
         "minimunStock": 2,
-        "lastUpdated": ""
+        "lastUpdated": datetime.datetime.utcnow()
     }
 ]
 
@@ -90,7 +90,7 @@ def createProduct():
         "name": name,
         "quantity": quantity,
         "minimunStock": minimunStock,
-        "lastUpdated": ""
+        "lastUpdated": datetime.datetime.utcnow()
     })
     return jsonify({
         "success": {
@@ -144,6 +144,7 @@ def updateProduct(productID):
             elif (operation == "add"):
                 i["currentStock"] += quantity
             i["name"] = name
+            i["lastUpdated"] = datetime.datetime.utcnow()
             return jsonify({
                 "success": {
                     "code": "ABC",

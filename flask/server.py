@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 import jwt
 import datetime
+import bcrypt
 
 app = Flask(__name__)
 
@@ -30,7 +31,7 @@ users = [
         "id": 1,
         "name": "Iván",
         "email": "ivan@gmail.com",
-        "password": ""
+        "password": bcrypt.hashpw("prueba123".encode('utf-8'), bcrypt.gensalt())
     }
 ]
 
@@ -202,11 +203,29 @@ def login():
                 "details": "Usuario no encontrado en base de datos"
             }
         }), 400
+    if bcrypt.checkpw(password.encode('utf-8'), user["password"]):
+        pass
+    else:
+        return jsonify({
+            "error": {
+                "code": "ABC",
+                "message": "Contraseña incorrecta",
+                "details": "Contraseña incorrecta"
+            }
+        }), 400
     token = jwt.encode({
         "id": user["id"],
         "name": user["name"],
         "exp": datetime.datetime.utcnow()+ datetime.timedelta(hours=1)
     }, JWT_SECRET, algorithm="HS256")
+
+    return jsonify({
+        "success": {
+            "code": "ABC",
+            "message": "Login correcto",
+            "token": token
+        }
+    }), 200
 
 if __name__ == '__main__':
     app.run(debug=True, port=4002)

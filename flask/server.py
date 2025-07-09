@@ -1,9 +1,12 @@
 from flask import Flask, jsonify, request
-import json
+import jwt
+import datetime
 
 app = Flask(__name__)
 
 productID_ =2
+
+JWT_SECRET = "JWT"
 
 inventario = [
     {
@@ -175,6 +178,34 @@ def deleteProductByID(productID):
                 "details": "productId incorrecto"
             }
         }), 400
+
+@app.route("/users/login", methods=["GET"])
+def login():
+    data = request.get_json()
+    email = data.get("email")
+    password = data.get("password") 
+    if email is None or password is None :
+        return jsonify({
+            "error": {
+                "code": "ABC",
+                "message": "Falta inforamción",
+                "details": "Flata información email o password"
+            }
+        }), 400
+    user = next((u for u in users if u["email"] == email), None)
+    if(user is None):
+         return jsonify({
+            "error": {
+                "code": "ABC",
+                "message": "Usuario no existe",
+                "details": "Usuario no encontrado en base de datos"
+            }
+        }), 400
+    token = jwt.encode({
+        "id": user["id"],
+        "name": user["name"],
+        "exp": datetime.datetime.utcnow()+ datetime.timedelta(hours=1)
+    }, JWT_SECRET, algorithm="HS256")
 
 if __name__ == '__main__':
     app.run(debug=True, port=4002)

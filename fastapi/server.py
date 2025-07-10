@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 import datetime
 import bcrypt
+import jwt
 
 app = FastAPI()
 
@@ -216,3 +217,56 @@ def deleteProductByID(productID: int):
                 }},
             status_code=404
         )
+
+@app.get("/users/login")
+async def login(request: Request):
+    data = await request.json()
+    email = data.get("email")
+    password = data.get("password") 
+    if email is None or password is None :
+       return JSONResponse(
+            content=
+                {"error": {
+                    "code": "ABC",
+                    "message": "Falta información",
+                    "details": "Falta información (name, minimunStock, quantity)"
+                }},
+            status_code=400
+        )
+    user = next((u for u in users if u["email"] == email), None)
+    if(user is None):
+        return JSONResponse(
+            content=
+                {"error": {
+                    "code": "ABC",
+                    "message": "Usuario no existe",
+                    "details": "Usuario no encontrado en base de datos"
+                }},
+            status_code=400
+        )
+    if bcrypt.checkpw(password.encode('utf-8'), user["password"]):
+        pass
+    else:
+        return JSONResponse(
+            content=
+                {"error": {
+                    "code": "ABC",
+                    "message": "Contraseña incorrecta",
+                    "details": "Contraseña incorrecta"
+                }},
+            status_code=400
+        )
+    token = jwt.encode({
+        "id": user["id"],
+        "name": user["name"],
+        "exp": datetime.datetime.utcnow()+ datetime.timedelta(hours=1)
+    }, JWT_SECRET, algorithm="HS256")
+    return JSONResponse(
+        content=
+            {"success": {
+            "code": "ABC",
+            "message": "Login correcto",
+            "token": token
+        }},
+        status_code=200
+    )

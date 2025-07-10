@@ -1,6 +1,6 @@
 # 📦 Inventario Backend - Exploración de Frameworks
 
-Este proyecto es una iniciativa personal para explorar distintos frameworks de backend a través de la construcción de un sistema de inventario sencillo. El objetivo es comparar tecnologías, ver como funcionan las rutas, parámetros, entre otraos temas.
+Este proyecto es una iniciativa personal para explorar distintos frameworks de backend a través de la construcción de un sistema de inventario sencillo. El objetivo es comparar tecnologías, ver como funcionan las rutas, parámetros, entre otros temas.
 
 ## 🚀 Tecnologías exploradas
 
@@ -38,3 +38,4 @@ inventario-backend/
 ├── docs/               # Documentación adicional
 ├── postman             # Archivo de rutas exportadas en postman
 └── README.md           # Este archivo
+

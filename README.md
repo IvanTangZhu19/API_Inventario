@@ -61,3 +61,12 @@ inventario-backend/
   ```
     python server.py
   ```
+- FastAPI
+  - Instala fastapi y uvicorn (para leventar el servidor)
+  ```
+    pip install fastapi uvicorn
+  ```
+- Levanta el servidor
+  ```
+    uvicorn server:app --reload --port 4002
+  ```

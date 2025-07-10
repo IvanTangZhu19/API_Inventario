@@ -35,7 +35,29 @@ inventario-backend/
 ├── django/             # Implementación en Django
 ├── springboot/         # Implementación en Spring Boot
 ├── .NET/               # Implementación en .NET Core
-├── docs/               # Documentación adicional
-├── postman             # Archivo de rutas exportadas en postman
+├── postman.json        # Archivo de rutas exportadas en postman
 └── README.md           # Este archivo
+```
 
+## Comandos
+
+- Express
+  - Instala las dependencias creando el node_modules de acuerdo a lo que esté en el package.json. El segundo comando es cuando se quiere crear un nuevo proyecto de cero:
+  ```
+    npm install
+    npm install express
+  ```
+  - Para iniciar o levantar el servidor:
+  ```
+    node server.js
+    npm start
+  ```
+- Flask
+  - Primero se instalan las dependencias necesarias:
+  ```
+    pip install flask PyJWT bcrypt
+  ```
+  - Para levantar el servidor:
+  ```
+    python server.py
+  ```

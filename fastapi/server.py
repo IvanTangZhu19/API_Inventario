@@ -181,3 +181,38 @@ async def updateProduct(productID: int, request: Request):
                     }},
                 status_code=404
             )
+
+@app.delete("/inventory/{productID}")
+def deleteProductByID(productID: int):
+    if (productID is not None):
+        for i in inventario:
+            if i["productID"] == productID :
+                inventario.remove(i)
+                return JSONResponse(
+                    content=
+                        {"success": {
+                            "code": "ABC",
+                            "message": "Se eliminó correctamente"
+                        }},
+                    status_code=200
+                )
+        return JSONResponse(
+            content=
+                {"error": {
+                     "code": "ABC",
+                    "message": "ProductoId no encontrado",
+                    "details": "Parámetro productId no encontrado en la base de datos"
+                }},
+            status_code=404
+        )
+    
+    else:
+        return JSONResponse(
+            content=
+                {"error": {
+                    "code": "ABC",
+                    "message": "Parámetros incorrectos",
+                    "details": "productId incorrecto"
+                }},
+            status_code=404
+        )

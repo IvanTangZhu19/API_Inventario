@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 import datetime
 import bcrypt
@@ -64,3 +64,47 @@ def getProductByID(productID: int):
                 }},
             status_code=400
         )
+    
+@app.post("/inventory")
+async def addProducts(request: Request):
+    global productID_
+    data = await request.json()
+    name = data["name"]
+    minimunStock = data["minimunStock"]
+    quantity = data["quantity"] 
+    if (name is None or minimunStock is None or quantity is None) :
+        return JSONResponse(
+            content=
+                {"error": {
+                    "code": "ABC",
+                    "message": "Falta información",
+                    "details": "Falta información (name, minimunStock, quantity)"
+                }},
+            status_code=400
+        )
+    if (minimunStock < 0 or quantity < 0) :
+        return JSONResponse(
+            content=
+                {"error": {
+                    "code": "ABC",
+                    "message": "Cantidades deben ser mayores a cero",
+                    "details": "Cantidades: minimunStock, quantity deben ser mayores a cero"
+                }},
+            status_code=400
+        )
+    productID_ = productID_ + 1
+    inventario.append({
+        "productID": productID_,
+        "name": name,
+        "quantity": quantity,
+        "minimunStock": minimunStock,
+        "lastUpdated": datetime.datetime.utcnow()
+    })
+    return JSONResponse(
+        content=
+            {"success": {
+                "code": "ABC",
+                "message": "Se añadió correctamente"
+            }},
+        status_code=201
+    )

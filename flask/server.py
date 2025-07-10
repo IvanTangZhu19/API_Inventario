@@ -152,6 +152,14 @@ def updateProduct(productID):
                     "message": "Se actualizó correctamente",
                 }
             }), 200
+        else:
+            return jsonify({
+                "error": {
+                    "code": "ABC",
+                    "message": "ProductoId no encontrado",
+                    "details": "Parámetro productId no encontrado en la base de datos"
+                }
+            }), 404 
 
 @app.route("/inventory/<int:productID>", methods=["DELETE"])
 def deleteProductByID(productID):

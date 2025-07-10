@@ -69,9 +69,9 @@ def getProductByID(productID: int):
 async def addProducts(request: Request):
     global productID_
     data = await request.json()
-    name = data["name"]
-    minimunStock = data["minimunStock"]
-    quantity = data["quantity"] 
+    name = data.get("name")
+    minimunStock = data.get("minimunStock")
+    quantity = data.get("quantity") 
     if (name is None or minimunStock is None or quantity is None) :
         return JSONResponse(
             content=

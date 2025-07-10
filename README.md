@@ -68,5 +68,5 @@ inventario-backend/
   ```
 - Levanta el servidor
   ```
-    uvicorn server:app --reload --port 4002
+    python -m uvicorn server:app --reload --port 4002
   ```

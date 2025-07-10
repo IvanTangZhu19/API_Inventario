@@ -34,6 +34,6 @@ users = [
     }
 ]
 
-@app.get("/")
-def getInventory():
-    return 1
+@app.get("/inventory", status_code=200)
+def getProducts():
+    return inventario

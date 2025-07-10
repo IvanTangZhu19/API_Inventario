@@ -98,7 +98,7 @@ async def addProducts(request: Request):
         "name": name,
         "quantity": quantity,
         "minimunStock": minimunStock,
-        "lastUpdated": datetime.datetime.utcnow()
+        "lastUpdated": datetime.datetime.utcnow().isoformat()
     })
     return JSONResponse(
         content=
@@ -108,3 +108,76 @@ async def addProducts(request: Request):
             }},
         status_code=201
     )
+
+@app.put("/inventory/{productID}")
+async def updateProduct(productID: int, request: Request):
+    data = await request.json()
+    name = data.get("name")
+    quantity = data.get("quantity") 
+    operation = data.get("operation") 
+    if (name is None or quantity is None or operation is None) :
+        return JSONResponse(
+            content=
+                {"error": {
+                    "code": "ABC",
+                    "message": "Falta información",
+                    "details": "Falta información (name, minimunStock, quantity)"
+                }},
+            status_code=400
+        )
+    if quantity <= 0 :
+        return JSONResponse(
+            content=
+                {"error": {
+                    "code": "ABC",
+                    "message": "Información incorrecta",
+                    "details": "Quantity debe ser mayor a cero"
+                }},
+            status_code=400
+        )
+    if(operation != "add" and operation != "substract"):
+        return JSONResponse(
+            content=
+                {"error": {
+                    "code": "ABC",
+                    "message": "Información incorrecta",
+                    "details": "Operation tiene que ser add o substract"
+                }},
+            status_code=400
+        )
+    for i in inventario:
+        if (i["productID"] == productID) :
+            if (operation == "substract" and i["currentStock"] >= quantity):
+                i["currentStock"] -= quantity
+            elif (operation == "substract" and i["currentStock"] < quantity):
+                return JSONResponse(
+                    content=
+                        {"error": {
+                            "code": "ABC",
+                            "message": "Cantidad erronea",
+                            "details": "No hay suficientes existencias del producto"
+                        }},
+                    status_code=400
+                )
+            elif (operation == "add"):
+                i["currentStock"] += quantity
+            i["name"] = name
+            i["lastUpdated"] = datetime.datetime.utcnow().isoformat()
+            return JSONResponse(
+                content=
+                    {"success": {
+                        "code": "ABC",
+                        "message": "Se actualizó correctamente"
+                    }},
+                status_code=200
+            )
+        else:
+            return JSONResponse(
+                content=
+                    {"error": {
+                        "code": "ABC",
+                        "message": "ProductoId no encontrado",
+                        "details": "Parámetro productId no encontrado en la base de datos"
+                    }},
+                status_code=404
+            )

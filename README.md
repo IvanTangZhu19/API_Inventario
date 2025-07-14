@@ -1,13 +1,13 @@
 # 📦 Inventario Backend - Exploración de Frameworks
 
-Este proyecto es una iniciativa personal para explorar distintos frameworks de backend a través de la construcción de un sistema de inventario sencillo. El objetivo es comparar tecnologías, ver como funcionan las rutas, parámetros, entre otros temas.
+Este proyecto es una iniciativa personal para explorar distintos frameworks de backend a través de la construcción de un sistema de inventario sencillo. Con el objetivo de comparar tecnologías, ver como funcionan las rutas, parámetros, entre otros temas.
 
 ## 🚀 Tecnologías exploradas
 
 Este repositorio contendrá versiones del sistema construidas con diferentes frameworks, tales como:
 
 - **Node.js (Express.js)**
-- **Python (Flask, Django)**
+- **Python (Flask, FastAPI, Django)**
 - **Java (Spring Boot)**
 - **Go (Gin / Fiber)**
 - **Rust (Actix Web / Rocket)**
@@ -20,9 +20,9 @@ Cada implementación estará organizada en carpetas separadas dentro del reposit
 El sistema de inventario incluirá funcionalidades básicas como:
 
 - Gestión de productos:
-  - Crear / Leer / Actualizar / Eliminar productos
+  - Crear / Leer / Actualizar / Eliminar producto
 - Autenticación de usuarios (opcional según framework)
-- API RESTful para consumo por frontend o terceros
+- API RESTful para consumo por frontend o terceros (Se verifica con Postman)
 
 ## 📁 Estructura del repositorio
 

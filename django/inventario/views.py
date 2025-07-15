@@ -65,3 +65,27 @@ def Products(request):
                 "message": "Se añadió correctamente",
             }
         }, status=201)
+    
+def getProductByID(request, productID):
+    if request.method == "GET":
+        if (productID is not None):
+            for i in inventario:
+                if i["productID"] == productID :
+                    return JsonResponse(i, status=200)
+            return JsonResponse(
+                    {"error": {
+                        "code": "ABC",
+                        "message": "ProductoId no encontrado",
+                        "details": "Parámetro productId no encontrado en la base de datos"
+                    }},
+                status=404
+            )
+        else:
+            return JsonResponse(
+                    {"error": {
+                        "code": "ABC",
+                        "message": "Parámetros incorrectos",
+                        "details": "productId incorrecto"
+                    }},
+                status=400
+            )

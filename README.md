@@ -70,3 +70,20 @@ inventario-backend/
   ```
     python -m uvicorn server:app --reload --port 4002
   ```
+- Django
+  - Instala Django
+  ```
+    pip install django
+  ```
+  - Crea el proyecto Django
+  ```
+    python -m django startproject mi_proyecto
+  ```
+  - Crea una app (estando dentro de la carpeta)
+  ```
+    python manage.py startapp inventario
+  ```
+  - Levanta el servidor
+  ```
+    python manage.py runserver 4002
+  ```

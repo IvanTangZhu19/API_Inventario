@@ -65,8 +65,9 @@ def Products(request):
                 "message": "Se añadió correctamente",
             }
         }, status=201)
-    
-def getProductByID(request, productID):
+
+@csrf_exempt
+def ProductByID(request, productID):
     if request.method == "GET":
         if (productID is not None):
             for i in inventario:
@@ -89,3 +90,68 @@ def getProductByID(request, productID):
                     }},
                 status=400
             )
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        name = data.get("name")
+        quantity = data.get("quantity") 
+        operation = data.get("operation") 
+        if (name is None or quantity is None or operation is None) :
+            return JsonResponse(
+                    {"error": {
+                        "code": "ABC",
+                        "message": "Falta información",
+                        "details": "Falta información (name, minimunStock, quantity)"
+                    }},
+                status=400
+            )
+        if quantity <= 0 :
+            return JsonResponse(
+                    {"error": {
+                        "code": "ABC",
+                        "message": "Información incorrecta",
+                        "details": "Quantity debe ser mayor a cero"
+                    }},
+                status=400
+            )
+        if(operation != "add" and operation != "substract"):
+            return JsonResponse(
+                    {"error": {
+                        "code": "ABC",
+                        "message": "Información incorrecta",
+                        "details": "Operation tiene que ser add o substract"
+                    }},
+                status=400
+            )
+        for i in inventario:
+            if (i["productID"] == productID) :
+                if (operation == "substract" and i["currentStock"] >= quantity):
+                    i["currentStock"] -= quantity
+                elif (operation == "substract" and i["currentStock"] < quantity):
+                    return JsonResponse(
+                            {"error": {
+                                "code": "ABC",
+                                "message": "Cantidad erronea",
+                                "details": "No hay suficientes existencias del producto"
+                            }},
+                        status=400
+                    )
+                elif (operation == "add"):
+                    i["currentStock"] += quantity
+                i["name"] = name
+                i["lastUpdated"] = datetime.datetime.utcnow().isoformat()
+                return JsonResponse(
+                        {"success": {
+                            "code": "ABC",
+                            "message": "Se actualizó correctamente"
+                        }},
+                    status=200
+                )
+            else:
+                return JsonResponse(
+                        {"error": {
+                            "code": "ABC",
+                            "message": "ProductoId no encontrado",
+                            "details": "Parámetro productId no encontrado en la base de datos"
+                        }},
+                    status=404
+                )

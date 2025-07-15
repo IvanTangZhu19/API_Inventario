@@ -89,7 +89,7 @@ def createProduct():
     inventario.append({
         "productID": productID_,
         "name": name,
-        "quantity": quantity,
+        "currentStock": quantity,
         "minimunStock": minimunStock,
         "lastUpdated": datetime.datetime.utcnow()
     })

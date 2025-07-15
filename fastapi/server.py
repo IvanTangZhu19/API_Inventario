@@ -97,7 +97,7 @@ async def addProducts(request: Request):
     inventario.append({
         "productID": productID_,
         "name": name,
-        "quantity": quantity,
+        "currentStock": quantity,
         "minimunStock": minimunStock,
         "lastUpdated": datetime.datetime.utcnow().isoformat()
     })

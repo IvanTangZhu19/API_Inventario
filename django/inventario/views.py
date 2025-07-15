@@ -3,6 +3,8 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import datetime
 import json
+import bcrypt
+import jwt
 
 productID_ =2
 
@@ -22,6 +24,14 @@ inventario = [
         "currentStock": 5,
         "minimunStock": 2,
         "lastUpdated": datetime.datetime.utcnow()
+    }
+]
+users = [
+    {
+        "id": 1,
+        "name": "Iván",
+        "email": "ivan@gmail.com",
+        "password": bcrypt.hashpw("prueba123".encode('utf-8'), bcrypt.gensalt())
     }
 ]
 
@@ -185,3 +195,53 @@ def ProductByID(request, productID):
                     }},
                 status=404
             )
+
+def login(request):
+    if request.method == "GET": 
+        data = json.loads(request.body)
+        email = data.get("email")
+        password = data.get("password") 
+        if email is None or password is None :
+            return JsonResponse(
+                content=
+                    {"error": {
+                        "code": "ABC",
+                        "message": "Falta información",
+                        "details": "Falta información (name, minimunStock, quantity)"
+                    }},
+                status=400
+            )
+        user = next((u for u in users if u["email"] == email), None)
+        if(user is None):
+            return JsonResponse(
+                    {"error": {
+                        "code": "ABC",
+                        "message": "Usuario no existe",
+                        "details": "Usuario no encontrado en base de datos"
+                    }},
+                status=400
+            )
+        if bcrypt.checkpw(password.encode('utf-8'), user["password"]):
+            pass
+        else:
+            return JsonResponse(
+                    {"error": {
+                        "code": "ABC",
+                        "message": "Contraseña incorrecta",
+                        "details": "Contraseña incorrecta"
+                    }},
+                status=400
+            )
+        token = jwt.encode({
+            "id": user["id"],
+            "name": user["name"],
+            "exp": datetime.datetime.utcnow()+ datetime.timedelta(hours=1)
+        }, JWT_SECRET, algorithm="HS256")
+        return JsonResponse(
+                {"success": {
+                "code": "ABC",
+                "message": "Login correcto",
+                "token": token
+            }},
+            status=200
+        )

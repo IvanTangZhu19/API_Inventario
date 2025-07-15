@@ -203,7 +203,6 @@ def login(request):
         password = data.get("password") 
         if email is None or password is None :
             return JsonResponse(
-                content=
                     {"error": {
                         "code": "ABC",
                         "message": "Falta información",

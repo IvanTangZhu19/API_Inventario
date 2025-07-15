@@ -155,3 +155,33 @@ def ProductByID(request, productID):
                         }},
                     status=404
                 )
+    if request.method == "DELETE":
+        if (productID is not None):
+            for i in inventario:
+                if i["productID"] == productID :
+                    inventario.remove(i)
+                    return JsonResponse(
+                            {"success": {
+                                "code": "ABC",
+                                "message": "Se eliminó correctamente"
+                            }},
+                        status=200
+                    )
+            return JsonResponse(
+                    {"error": {
+                        "code": "ABC",
+                        "message": "ProductoId no encontrado",
+                        "details": "Parámetro productId no encontrado en la base de datos"
+                    }},
+                status=404
+            )
+        
+        else:
+            return JsonResponse(
+                    {"error": {
+                        "code": "ABC",
+                        "message": "Parámetros incorrectos",
+                        "details": "productId incorrecto"
+                    }},
+                status=404
+            )

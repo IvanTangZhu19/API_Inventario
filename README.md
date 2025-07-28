@@ -10,8 +10,7 @@ Este proyecto es una iniciativa personal para explorar distintos frameworks de b
 </p>
 <p align="center">
   <img align="center" src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white" alt="Postman" width="100"/>
-  <img align="center" src="https://img.shields.io/badge/android%20studio-346ac1?style=for-the-badge&logo=android%20studio&logoColor=white" alt="Android Studio" width="130"/>
-  <img align="center" src="https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white" alt="VS Code" width="130"/>
+  <img align="center" src="https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white" alt="VS Code" width="140"/>
 </p>
 
 ## 🚀 Tecnologías exploradas

@@ -101,3 +101,7 @@ inventario-backend/
 - Spring
   - Inicializar el proyecto desde: https://start.spring.io/
   - Descomprimir zip
+  - Ejecutar:
+  ```
+    mvnw.cmd spring-boot:run
+  ```

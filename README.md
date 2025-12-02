@@ -98,3 +98,6 @@ inventario-backend/
   ```
     python manage.py runserver 4002
   ```
+- Spring
+  - Inicializar el proyecto desde: https://start.spring.io/
+  - Descomprimir zip
